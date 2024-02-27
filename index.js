@@ -5,7 +5,25 @@ const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config.json");
 
 // Create a new client to run the bot
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
+});
+
+const triggerWords = ["Nicolas"];
+
+client.on("messageCreate", message => {
+  if (message.author.bot) return false;
+
+  triggerWords.forEach(word => {
+    if (message.content.includes(word)) {
+      message.reply("Est un déchet");
+    }
+  });
+});
 
 // Create a command collection
 client.commands = new Collection();
