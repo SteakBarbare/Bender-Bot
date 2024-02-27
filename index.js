@@ -9,24 +9,8 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
-  ]
-});
-
-const triggerWords = ["Nicolas", "Nico", "Triau"];
-
-client.on("messageCreate", message => {
-  if (message.author.bot) return false;
-
-  triggerWords.forEach(word => {
-    if (message.content.includes(word)) {
-      message.reply("Est un déchet");
-    }
-  });
-
-  if (message.author.id == 142335378064408585) {
-    message.reply("Ta gueule");
-  }
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
 // Create a command collection
@@ -39,7 +23,7 @@ for (const folder of commandFolders) {
   const commandsPath = path.join(foldersPath, folder);
   const commandFiles = fs
     .readdirSync(commandsPath)
-    .filter(file => file.endsWith(".js"));
+    .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
@@ -57,7 +41,7 @@ for (const folder of commandFolders) {
 const eventsPath = path.join(__dirname, "events");
 const eventFiles = fs
   .readdirSync(eventsPath)
-  .filter(file => file.endsWith(".js"));
+  .filter((file) => file.endsWith(".js"));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);

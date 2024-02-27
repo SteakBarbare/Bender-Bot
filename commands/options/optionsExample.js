@@ -18,7 +18,7 @@ module.exports = {
     // )
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false)
-    .addBooleanOption(option =>
+    .addBooleanOption((option) =>
       option
         .setName("ephemeral")
         .setDescription("Whether or not the echo should be ephemeral")
@@ -34,7 +34,7 @@ module.exports = {
 
     await interaction.reply({
       content: "Saucisse potentiellement privée",
-      ephemeral: interaction.options.getBoolean("ephemeral")
+      ephemeral: interaction.options.getBoolean("ephemeral"),
     });
-  }
+  },
 };
