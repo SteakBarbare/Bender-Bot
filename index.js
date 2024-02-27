@@ -13,7 +13,7 @@ const client = new Client({
   ]
 });
 
-const triggerWords = ["Nicolas"];
+const triggerWords = ["Nicolas", "Nico", "Triau"];
 
 client.on("messageCreate", message => {
   if (message.author.bot) return false;
@@ -23,6 +23,10 @@ client.on("messageCreate", message => {
       message.reply("Est un déchet");
     }
   });
+
+  if (message.author.id == 142335378064408585) {
+    message.reply("Ta gueule");
+  }
 });
 
 // Create a command collection
