@@ -3,7 +3,6 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, GatewayIntentBits, Events } = require("discord.js");
 const { token } = require("./config.json");
-const Sequelize = require("sequelize");
 
 // Create a new client to run the bot
 const client = new Client({
@@ -12,60 +11,6 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent
   ]
-});
-
-const sequelize = new Sequelize("database", "user", "password", {
-  host: "localhost",
-  dialect: "sqlite",
-  logging: false,
-  // SQLite only
-  storage: "database.sqlite"
-});
-
-const Tags = sequelize.define("tags", {
-  name: {
-    type: Sequelize.STRING,
-    unique: true
-  },
-  description: Sequelize.TEXT,
-  username: Sequelize.STRING,
-  usage_count: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0,
-    allowNull: false
-  }
-});
-
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-
-  const { commandName } = interaction;
-
-  if (commandName === "bender_addtag") {
-    const tagName = interaction.options.getString("name");
-    const tagDescription = interaction.options.getString("description");
-
-    try {
-      // equivalent to: INSERT INTO tags (name, description, username) values (?, ?, ?);
-      const tag = await Tags.create({
-        name: tagName,
-        description: tagDescription,
-        username: interaction.user.username
-      });
-
-      return interaction.reply(`Tag ${tag.name} added.`);
-    } catch (error) {
-      if (error.name === "SequelizeUniqueConstraintError") {
-        return interaction.reply("That tag already exists.");
-      }
-
-      return interaction.reply("Something went wrong with adding a tag.");
-    }
-  } else if (commandName === "bender_getalltags") {
-    // equivalent to: SELECT * FROM tags;
-    const tags = await Tags.findAll();
-    console.log(tags);
-  }
 });
 
 // Create a command collection
@@ -103,10 +48,6 @@ for (const file of eventFiles) {
   const event = require(filePath);
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
-    if (event.name == Events.ClientReady) {
-      Tags.sync();
-      console.log(`Database Tags successfully synced !`);
-    }
   } else {
     client.on(event.name, (...args) => event.execute(...args));
   }

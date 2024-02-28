@@ -17,10 +17,5 @@ module.exports = {
         .setDescription("Description of the tag to save")
         .setRequired(true)
     ),
-  async execute(interaction) {
-    // await interaction.reply({
-    //   content: "Post request done",
-    //   ephemeral: true
-    // });
-  }
+  async execute(interaction) {}
 };
