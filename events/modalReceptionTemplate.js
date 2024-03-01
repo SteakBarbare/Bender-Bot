@@ -1,10 +1,4 @@
-const {
-  ActionRowBuilder,
-  Events,
-  ModalBuilder,
-  TextInputBuilder,
-  TextInputStyle
-} = require("discord.js");
+const { Events } = require("discord.js");
 
 module.exports = {
   name: Events.InteractionCreate,
@@ -13,6 +7,6 @@ module.exports = {
     // Get the data entered by the user
     const sauce = interaction.fields.getTextInputValue("favoriteSauce");
     const jaaj = interaction.fields.getTextInputValue("bestJaaJInput");
-    console.log({ favoriteColor, hobbies });
+    console.log({ sauce, jaaj });
   }
 };

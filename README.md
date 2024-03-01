@@ -17,6 +17,7 @@ Discord Bot used as a template to learn NodeJs
 > > ```
 
 - npm i to install dependencies
+- node dbInit.js should be ran to save, sync and update your models
 - node deployCommands.js to register your commands in the guild
 - node index.js to launch the Bot
 
